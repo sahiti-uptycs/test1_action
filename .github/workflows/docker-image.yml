@@ -15,12 +15,11 @@ jobs:
       - name: Build an image from Dockerfile
         id: image_build
         run: |
-          docker build -t <your image> --iidfile=image_id.out .
+          docker build -t nginx-vulners:latest --iidfile=image_id.out .
           echo ::set-output name=image_id::$(cat image_id.out)
-
       - name: Run Uptycs Vulnerability Scanner Expected to Fail
-        uses: sahiti-uptycs/test1_action@main
+        uses: Uptycs/actionsvulners@main
         with:
-          uptycs-secret: ${{ secrets.UPTYCS_CI_SECRET }}
-          hostname: ${{ secrets.UPTYCS_CI_HOSTNAME }}
-          image-id: ${{ the id of the image you want to scan }}
+          uptycs-secret: ${{ secrets.UPTYCS_CI_SECRET_VULNERS }}
+          hostname: ${{ secrets.UPTYCS_CI_HOST_NAME_VULNERS }}
+          image-id: ${{ steps.image_build.outputs.name }}
