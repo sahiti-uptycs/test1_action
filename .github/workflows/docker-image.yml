@@ -15,7 +15,7 @@ jobs:
       - name: Build an image from Dockerfile
         id: image_build
         run: |
-          docker build -t debian:latest --iidfile=image_id.out .
+          docker build -t nginx-vulners:latest --iidfile=image_id.out .
           echo ::set-output name=image_id::$(cat image_id.out)
       - name: Run Uptycs Vulnerability Scanner Expected to Fail
         uses: sahiti-uptycs/test1_action@main
