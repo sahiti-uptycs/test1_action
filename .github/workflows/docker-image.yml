@@ -1,0 +1,26 @@
+name: build
+on:
+  push:
+   branches:
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build an image from Dockerfile
+        id: image_build
+        run: |
+          docker build -t <your image> --iidfile=image_id.out .
+          echo ::set-output name=image_id::$(cat image_id.out)
+
+      - name: Run Uptycs Vulnerability Scanner Expected to Fail
+        uses: sahiti-uptycs/test1_action@main
+        with:
+          uptycs-secret: ${{ secrets.UPTYCS_CI_SECRET }}
+          hostname: ${{ secrets.UPTYCS_CI_HOSTNAME }}
+          image-id: ${{ the id of the image you want to scan }}
