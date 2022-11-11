@@ -26,4 +26,4 @@ jobs:
         with:
           uptycs-secret: ${{ secrets.UPTYCS_CI_SECRET }}
           hostname: ${{ secrets.UPTYCS_CI_HOSTNAME }}
-          image-id: ${{ env.image_scan_id }
+          image-id: ${{ env.image_scan_id }}
