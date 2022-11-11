@@ -1,11 +1,13 @@
-# Pull base image
-FROM debian:latest
+# # Pull base image
+# FROM debian:latest
 
-COPY entrypoint.sh /
-# Install nginx and adjust nginx config to stay in foreground
-RUN apt-get update && apt-get install --no-install-recommends -y nginx; \
- echo "daemon off;" >> /etc/nginx/nginx.conf
+# COPY entrypoint.sh /
+# # Install nginx and adjust nginx config to stay in foreground
+# RUN apt-get update && apt-get install --no-install-recommends -y nginx; \
+#  echo "daemon off;" >> /etc/nginx/nginx.conf
 
-RUN chmod +x /entrypoint.sh
-EXPOSE 80
-ENTRYPOINT ["/entrypoint.sh"]
+# RUN chmod +x /entrypoint.sh
+# EXPOSE 80
+# ENTRYPOINT ["/entrypoint.sh"]
+FROM alpine:3.14
+EXPOSE 80 443
