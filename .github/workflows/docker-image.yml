@@ -15,7 +15,7 @@ jobs:
       - name: Build an image from Dockerfile
         id: image_build
         run: |
-          docker build -t alpine:9 --iidfile=image_id.out .
+          docker build -t alpine:latest --iidfile=image_id.out .
           echo image_scan_id=$(cat image_id.out) >> $GITHUB_ENV
       - name: Debug
         id: print
