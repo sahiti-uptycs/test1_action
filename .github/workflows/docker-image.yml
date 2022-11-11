@@ -16,10 +16,14 @@ jobs:
         id: image_build
         run: |
           docker build -t nginx-vulners:latest --iidfile=image_id.out .
-          echo ::set-output name=image_id::$(cat image_id.out)
-      - name: Run Uptycs Vulnerability Scanner Expected to Fail
-        uses: sahiti-uptycs/test1_action@main
+          echo image_scan_id=$(cat image_id.out) >> $GITHUB_ENV
+      - name: Debug
+        id: print
+        run: |
+          echo "url: ${{ secrets.UPTYCS_CI_HOST_NAME_VULNERS }}, image_id: ${{ env.image_scan_id }}"
+      - name: Run Uptycs Vulnerability Scanner Expected to Failed
+        uses: uptycslabs/uptycs-action@main
         with:
-          uptycs-secret: ${{ secrets.UPTYCS_CI_SECRET}}
-          hostname: ${{ secrets.UPTYCS_CI_HOST_NAME}}
-          image-id: ${{ steps.image_build.outputs.name }}
+          uptycs-secret: ${{ secrets.UPTYCS_CI_SECRET }}
+          hostname: ${{ secrets.UPTYCS_CI_HOSTNAME }}
+          image-id: ${{ env.image_scan_id }
